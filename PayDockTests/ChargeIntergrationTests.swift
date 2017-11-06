@@ -12,9 +12,10 @@ import XCTest
 class PayDockChargeTests: XCTestCase {
     
     
-    let chargeId: String = "58fdc65674bff715308237be"
+    let chargeId: String = "59aea2bed959637df4f8535e"
     let archiveChargeId: String = "58fdc65674bff715308237be"
-    let gatewayId: String = "58fdaffc74bff7153082359d"
+    let BSBGatewayId: String = "58fdaffc74bff7153082359d"
+    let creditCardGatewayId = "5620de31361b787230cb7d74"
     let customerId: String = "58fde04c74bff71530823818"
    
     
@@ -33,7 +34,7 @@ class PayDockChargeTests: XCTestCase {
     ///add charge with credit card
     func testAddChargeWithCreditCard() {
         let address = Address(line1: "one", line2: "two", city: "city", postcode: "1234", state: "state", country: "AU")
-        let card = Card(gatewayId: gatewayId, name: "Test User", number: "4200000000000000", expireMonth: 01, expireYear: 17, ccv: "123", address: address)
+        let card = Card(gatewayId: creditCardGatewayId, name: "Test User", number: "5520000000000000", expireMonth: 05, expireYear: 18, ccv: "123", address: address)
         let paymentSource = PaymentSource.card(value: card)
         let customerRequest = CustomerRequest(firstName: "Test_first_name", lastName: "Test_last_name", email: "Test@test.com", reference: "customer Refrence", phone: nil, paymentSource: paymentSource)
         let chargeRequest = ChargeRequest(amount: 10, currency: "AUD", reference: "some charge reference", description: "some charge description", customer: customerRequest)
@@ -54,7 +55,7 @@ class PayDockChargeTests: XCTestCase {
     /// add charge with bank account
     func testAddChargeWithBankAccount() {
         let address = Address(line1: "one", line2: "two", city: "city", postcode: "1234", state: "state", country: "AU")
-        let account = BankAccount(gatewayId: gatewayId, accountNumber: "411111111111111",accountName: "Test User", bankName: "Bank of Australia", accountRouting: "123123", holderType: "personal", address: address, type: "savings")
+        let account = BankAccount(gatewayId: BSBGatewayId, accountNumber: "411111111111111",accountName: "Test User", bankName: "Bank of Australia", accountRouting: "123123", holderType: "personal", address: address, type: "savings")
         let paymentSource = PaymentSource.bankAccount(value: account)
         let customerRequest = CustomerRequest(firstName: "Promise name", lastName: "Promise last name", email: "Test@test.com", reference: "AUS", phone: nil, paymentSource: paymentSource)
         let chargeRequest = ChargeRequest(amount: 10, currency: "AUD", reference: "some charge reference", description: "some charge description", customer: customerRequest)

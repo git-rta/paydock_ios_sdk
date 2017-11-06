@@ -8,7 +8,7 @@
 
 import UIKit
 
-class CardFormViewController: UIViewController {
+public class CardFormViewController: UIViewController {
     
 
     
@@ -31,7 +31,7 @@ class CardFormViewController: UIViewController {
     
     @IBOutlet weak var lblVGError: UILabel!
     
-    let gatewayId: String = "58fdaffc74bff7153082359d"
+    let gatewayId: String = "58d06b6a6529147222e4afa8"
     
     
     override func viewDidLoad() {
@@ -90,11 +90,11 @@ class CardFormViewController: UIViewController {
             let year: String? = dateArr.count > 1 ? dateArr[1] : nil
             
             PayDock.setSecretKey(key: "")
-            PayDock.setPublicKey(key: "1b0496942b784d96b660d01542aa0ceba45dd9e9")
+            PayDock.setPublicKey(key: "8b2dad5fcf18f6f504685a46af0df82216781f3b")
             PayDock.shared.isSandbox = true
             
             let address = Address(line1: "one", line2: "two", city: "city", postcode: "1234", state: "state", country: "AU")
-            let card = Card(gatewayId: gatewayId, name: cardHolderNameField.text!, number: cardNumberField.text!, expireMonth: Int(month)!, expireYear: Int(year!)!, ccv: ccvField.text, address: address)
+            let card = Card(gatewayId: gatewayId, name: cardHolderNameField.text!, number: cardNumberField.text!, expireMonth: month ,expireYear: year!, ccv: ccvField.text, address: address)
             let paymentSource = PaymentSource.card(value: card)
             let customerRequest = CustomerRequest(firstName: "Test_first_name", lastName: "Test_last_name", email: "Test@test.com", reference: "customer Refrence", phone: nil, paymentSource: paymentSource)
             let chargeRequest = ChargeRequest(amount: 10, currency: "AUD", reference: "some charge reference", description: "some charge description", customer: customerRequest)

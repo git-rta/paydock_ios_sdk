@@ -11,7 +11,7 @@ import XCTest
 
 class PayDockExternalCheckoutTest: XCTestCase {
     
-    let gatewayId: String = "58fdaffc74bff7153082359d"
+    let gatewayId: String = "59fa95e645e9d61555d5c72f"
     
     override func setUp() {
         super.setUp()

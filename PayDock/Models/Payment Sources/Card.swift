@@ -23,9 +23,9 @@ public struct Card: Parameterable, Mapable {
     /// Card Scheme
     public var scheme: String?
     /// Card expiration month mm format
-    public var expireMonth: Int? // request required
+    public var expireMonth: String? // request required
     /// Card expiration year yyyy format
-    public var expireYear: Int? // request required
+    public var expireYear: String? // request required
     /// Customer's Address
     public var address: Address?
     /// Gateway ID
@@ -39,7 +39,7 @@ public struct Card: Parameterable, Mapable {
     /// raw json response from server
     public var rawJson: [String: Any]?
     
-    public init(gatewayId: String, name: String, number: String, expireMonth: Int, expireYear: Int, ccv: String?, address: Address?) {
+    public init(gatewayId: String, name: String, number: String, expireMonth: String, expireYear: String, ccv: String?, address: Address?) {
         self.gatewayId = gatewayId
         self.name = name
         self.number = number

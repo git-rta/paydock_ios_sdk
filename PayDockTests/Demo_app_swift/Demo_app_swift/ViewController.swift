@@ -9,7 +9,30 @@
 import UIKit
 @testable import PayDock
 class ViewController: UIViewController {
+    @IBAction func DateChanged(_ sender: UITextField) {
+        var nsText = expirationDateField.text!
 
+        if ((nsText.count <= 2) && (nsText.contains("/"))){
+            nsText = nsText.replacingOccurrences(of: String("/"), with: "")
+            nsText = nsText.replacingOccurrences(of: String("0"), with: "")
+            nsText.insert("0", at: nsText.index(nsText.startIndex, offsetBy: 0))
+            expirationDateField.text = nsText
+        }
+        if (nsText.count >= 3){
+            if (!nsText.contains("/")){
+                nsText.insert("/", at: nsText.index(nsText.startIndex, offsetBy: 2))
+                expirationDateField.text = nsText
+            }
+        }
+        
+//        if (nsText.count == 5){
+//            let (monthString, yearString, validDateNumber) = checkDate(input: nsText as String)
+//        }
+
+        
+        
+    }
+    
     @IBOutlet weak var cardNumberField: UITextField!
     @IBOutlet weak var cardHolderNameField: UITextField!
     @IBOutlet weak var expirationDateField: UITextField!
@@ -22,7 +45,7 @@ class ViewController: UIViewController {
 
     
    
-    let gatewayId: String = "5620de31361b787230cb7d74"
+    let gatewayId: String = "58d06b6a6529147222e4afa8"
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -37,7 +60,7 @@ class ViewController: UIViewController {
 //        let CardFormVC = storyboard.instantiateViewController(withIdentifier: "CardFormViewController") as UIViewController
 //
 //        self.present(CardFormVC, animated: true, completion: nil)
-//
+
         //Demo-app-swift
         
     }
@@ -48,17 +71,29 @@ class ViewController: UIViewController {
 
 
     @IBAction func cardSubmitPressed(_ sender: Any) {
+        clearErrors()        
         
         var valid = true
-        if (cardNumberField.text == "")
-        {
-            valid = false
-            lblVNo.text="card no is required";
-        }
+        
+        let (type, formatted, validCardNumber) = checkCardNumber(input: cardNumberField.text!)
+        let (monthString, yearString, validDateNumber) = checkDate(input: expirationDateField.text!)
+        
         if (cardHolderNameField.text == "")
         {
             valid = false
             lblVCardH.text="Name is required";
+        }
+        
+        if (validCardNumber == false)
+        {
+            valid = false
+            lblVNo.text="card no is incorrect";
+        }
+        
+        if (validDateNumber == false)
+        {
+            valid = false
+            lblVdate.text="expiration Date Field value is required";
         }
         
         if (ccvField.text == "")
@@ -66,29 +101,20 @@ class ViewController: UIViewController {
             valid = false
             lblVccv.text="CCV is required";
         }
-        if (expirationDateField.text == "")
-        {
-            valid = false
-            lblVdate.text="expiration Date Field value is required";
-        }
         
         
-        if(valid ){
-            var date = expirationDateField.text!
-            var dateArr = date.characters.split{$0 == "/"}.map(String.init)
-            let month: String = dateArr[0]
-            let year: String? = dateArr.count > 1 ? dateArr[1] : nil
+        if(valid){
             
             PayDock.setSecretKey(key: "")
-            PayDock.setPublicKey(key: "1b0496942b784d96b660d01542aa0ceba45dd9e9")
+            PayDock.setPublicKey(key: "8b2dad5fcf18f6f504685a46af0df82216781f3b")
             PayDock.shared.isSandbox = true
             
             let address = Address(line1: "one", line2: "two", city: "city", postcode: "1234", state: "state", country: "AU")
             let card = Card(gatewayId: gatewayId,
                             name: cardHolderNameField.text!,
                             number: cardNumberField.text!,
-                            expireMonth: Int(month)!,
-                            expireYear: Int(year!)!,
+                            expireMonth: monthString,
+                            expireYear: yearString,
                             ccv: ccvField.text,
                             address: address)
             let paymentSource = PaymentSource.card(value: card)
@@ -107,6 +133,7 @@ class ViewController: UIViewController {
                 do {
                     let token: String = try token()
                     print(token)
+                    self.lblerr.text = token
                 } catch let error {
                     debugPrint(error)
                     self.lblerr.text = error.localizedDescription
@@ -114,6 +141,16 @@ class ViewController: UIViewController {
             }
         }
     }
+    
+    func clearErrors()
+    {
+        lblVCardH.text = ""
+        lblVNo.text = ""
+        lblVdate.text = ""
+        lblVccv.text = ""
+        lblerr.text = ""
+    }
+
     
 }
 

@@ -12,6 +12,8 @@
 		44F0E0AA1F976D3F003898B1 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 44F0E0A81F976D3F003898B1 /* Main.storyboard */; };
 		44F0E0AC1F976D3F003898B1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 44F0E0AB1F976D3F003898B1 /* Assets.xcassets */; };
 		44F0E0AF1F976D3F003898B1 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 44F0E0AD1F976D3F003898B1 /* LaunchScreen.storyboard */; };
+		995282021FAC744D0047D7E8 /* CardCheck.swift in Sources */ = {isa = PBXBuildFile; fileRef = 995282011FAC744D0047D7E8 /* CardCheck.swift */; };
+		995282041FAC85A50047D7E8 /* DateChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 995282031FAC85A50047D7E8 /* DateChecker.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -22,6 +24,8 @@
 		44F0E0AB1F976D3F003898B1 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		44F0E0AE1F976D3F003898B1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		44F0E0B01F976D3F003898B1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		995282011FAC744D0047D7E8 /* CardCheck.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardCheck.swift; sourceTree = "<group>"; };
+		995282031FAC85A50047D7E8 /* DateChecker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateChecker.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,6 +64,8 @@
 				44F0E0AB1F976D3F003898B1 /* Assets.xcassets */,
 				44F0E0AD1F976D3F003898B1 /* LaunchScreen.storyboard */,
 				44F0E0B01F976D3F003898B1 /* Info.plist */,
+				995282011FAC744D0047D7E8 /* CardCheck.swift */,
+				995282031FAC85A50047D7E8 /* DateChecker.swift */,
 			);
 			path = Demo_app_swift;
 			sourceTree = "<group>";
@@ -138,6 +144,8 @@
 			files = (
 				44F0E0A71F976D3F003898B1 /* ViewController.swift in Sources */,
 				44F0E0A51F976D3F003898B1 /* AppDelegate.swift in Sources */,
+				995282021FAC744D0047D7E8 /* CardCheck.swift in Sources */,
+				995282041FAC85A50047D7E8 /* DateChecker.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

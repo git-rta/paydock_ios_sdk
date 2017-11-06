@@ -8,30 +8,7 @@
 
 import UIKit
 @testable import PayDock
-class ViewController: UIViewController {
-    @IBAction func DateChanged(_ sender: UITextField) {
-        var nsText = expirationDateField.text!
-
-        if ((nsText.count <= 2) && (nsText.contains("/"))){
-            nsText = nsText.replacingOccurrences(of: String("/"), with: "")
-            nsText = nsText.replacingOccurrences(of: String("0"), with: "")
-            nsText.insert("0", at: nsText.index(nsText.startIndex, offsetBy: 0))
-            expirationDateField.text = nsText
-        }
-        if (nsText.count >= 3){
-            if (!nsText.contains("/")){
-                nsText.insert("/", at: nsText.index(nsText.startIndex, offsetBy: 2))
-                expirationDateField.text = nsText
-            }
-        }
-        
-//        if (nsText.count == 5){
-//            let (monthString, yearString, validDateNumber) = checkDate(input: nsText as String)
-//        }
-
-        
-        
-    }
+class ViewController: UIViewController, UITextFieldDelegate {
     
     @IBOutlet weak var cardNumberField: UITextField!
     @IBOutlet weak var cardHolderNameField: UITextField!
@@ -42,16 +19,17 @@ class ViewController: UIViewController {
     @IBOutlet weak var lblVdate: UILabel!
     @IBOutlet weak var lblVccv: UILabel!
     @IBOutlet weak var lblerr: UILabel!
-
     
-   
+
     let gatewayId: String = "58d06b6a6529147222e4afa8"
+    var autoInsertDateSlash = true
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
-       
-       
+        cardNumberField.delegate = self
+        expirationDateField.delegate = self
+        ccvField.delegate = self
         
     }
     override func viewDidAppear(_ animated: Bool) {
@@ -67,6 +45,109 @@ class ViewController: UIViewController {
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    @IBAction func DateChanged(_ sender: UITextField) {
+        var nsText = expirationDateField.text!
+        
+        if ((nsText.count <= 2) && (nsText.contains("/"))){
+            nsText = nsText.replacingOccurrences(of: String("/"), with: "")
+            nsText = nsText.replacingOccurrences(of: String("0"), with: "")
+            nsText.insert("0", at: nsText.index(nsText.startIndex, offsetBy: 0))
+            expirationDateField.text = nsText
+        }
+        if ((nsText.count >= 2) && (nsText.count < 5) && (!nsText.contains("/")) && autoInsertDateSlash ){
+            nsText.insert("/", at: nsText.index(nsText.startIndex, offsetBy: 2))
+            expirationDateField.text = nsText
+        }
+        
+        if (nsText.count == 5){
+            let (monthString, yearString, validDateNumber) = checkDate(input: nsText as String)
+        }
+        
+        
+        
+    }
+    
+    let allowedDateCharacters = "0123456789/"
+    let allowedCardCharacters = "0123456789"
+    
+    func textField(_ textFieldToChange: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool{
+        if textFieldToChange == expirationDateField {
+            var nsText = textFieldToChange.text!
+            let startingLength = textFieldToChange.text?.count ?? 0
+            let lengthToAdd = string.count
+            let lengthToReplace = range.length
+            let newLength = startingLength + lengthToAdd - lengthToReplace
+            if (newLength > 5){
+                return false
+            }
+            
+            if (lengthToReplace > 0){
+                autoInsertDateSlash = false
+            }
+            
+            if (lengthToAdd > 0){
+                autoInsertDateSlash = true
+                if ((nsText.contains("/")) && ( string == "/")) {
+                    return false
+                }
+
+                if (nsText.contains("/")) {
+                    guard let index = nsText.index(of: "/") else { return false }
+                    let mentionPosition = nsText.distance(from: nsText.startIndex, to: index)
+                    if  ((range.location <= 2) && (mentionPosition >= 2)) {
+                        return false
+                    }
+                }
+                let cs = CharacterSet(charactersIn: allowedDateCharacters)
+                let filtered: String = (string.components(separatedBy: cs) as NSArray).componentsJoined(by: "")
+                if (string == filtered) {
+                    return false
+                }
+                return true
+            }
+        }
+        
+        if textFieldToChange == cardNumberField {
+            let startingLength = textFieldToChange.text?.count ?? 0
+            let lengthToAdd = string.count
+            let lengthToReplace = range.length
+            let newLength = startingLength + lengthToAdd - lengthToReplace
+            if (newLength > 16){
+                return false
+            }
+            
+            if (lengthToAdd > 0) {
+                let cs = CharacterSet(charactersIn: allowedCardCharacters)
+                let filtered: String = (string.components(separatedBy: cs) as NSArray).componentsJoined(by: "")
+                if (string == filtered) {
+                    return false
+                }
+            }
+            
+            return true
+        }
+        
+        if textFieldToChange == ccvField {
+            let startingLength = textFieldToChange.text?.count ?? 0
+            let lengthToAdd = string.count
+            let lengthToReplace = range.length
+            let newLength = startingLength + lengthToAdd - lengthToReplace
+            if (newLength > 4){
+                return false
+            }
+            if (lengthToAdd > 0) {
+                let cs = CharacterSet(charactersIn: allowedCardCharacters)
+                let filtered: String = (string.components(separatedBy: cs) as NSArray).componentsJoined(by: "")
+                if (string == filtered) {
+                    return false
+                }
+            }
+            return true
+        }
+        
+        return true
     }
 
 

@@ -61,9 +61,9 @@ class ViewController: UIViewController, UITextFieldDelegate {
             expirationDateField.text = nsText
         }
         
-        if (nsText.count == 5){
-            let (monthString, yearString, validDateNumber) = checkDate(input: nsText as String)
-        }
+//        if (nsText.count == 5){
+//            let (monthString, yearString, validDateNumber) = checkDate(input: nsText as String)
+//        }
         
         
         
@@ -74,7 +74,7 @@ class ViewController: UIViewController, UITextFieldDelegate {
     
     func textField(_ textFieldToChange: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool{
         if textFieldToChange == expirationDateField {
-            var nsText = textFieldToChange.text!
+            let nsText = textFieldToChange.text!
             let startingLength = textFieldToChange.text?.count ?? 0
             let lengthToAdd = string.count
             let lengthToReplace = range.length
@@ -156,7 +156,7 @@ class ViewController: UIViewController, UITextFieldDelegate {
         
         var valid = true
         
-        let (type, formatted, validCardNumber) = checkCardNumber(input: cardNumberField.text!)
+        let (_, _, validCardNumber) = checkCardNumber(input: cardNumberField.text!)
         let (monthString, yearString, validDateNumber) = checkDate(input: expirationDateField.text!)
         
         if (cardHolderNameField.text == "")

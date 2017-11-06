@@ -53,7 +53,7 @@ func matchesRegex(regex: String!, text: String!) -> Bool {
 
 func luhnCheck(cardNumber: String) -> Bool {
     var sum = 0
-    let reversedCharacters = cardNumber.characters.reversed().map { String($0) }
+    let reversedCharacters = cardNumber.reversed().map { String($0) }
     for (idx, element) in reversedCharacters.enumerated() {
         guard let digit = Int(element) else { return false }
         switch ((idx % 2 == 1), digit) {
@@ -90,8 +90,8 @@ func checkCardNumber(input: String) -> (type: CardType, formatted: String, valid
     
     // format
     var formatted4 = ""
-    for character in numberOnly.characters {
-        if formatted4.characters.count == 4 {
+    for character in numberOnly {
+        if formatted4.count == 4 {
             formatted += formatted4 + " "
             formatted4 = ""
         }

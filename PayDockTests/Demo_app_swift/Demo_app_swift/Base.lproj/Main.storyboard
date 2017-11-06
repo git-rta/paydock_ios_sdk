@@ -39,10 +39,13 @@
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
                             <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" usesAttributedText="YES" borderStyle="roundedRect" placeholder="Card Number" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="0lz-11-3YY">
-                                <rect key="frame" x="26" y="228" width="251" height="30"/>
+                                <rect key="frame" x="26" y="228" width="204" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <attributedString key="attributedText"/>
                                 <textInputTraits key="textInputTraits"/>
+                                <connections>
+                                    <action selector="cardNumberChanged:" destination="BYZ-38-t0r" eventType="editingChanged" id="jYu-DR-4BD"/>
+                                </connections>
                             </textField>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bt2-oI-nrh" userLabel="Card Number Validation Label">
                                 <rect key="frame" x="26" y="258" width="251" height="21"/>
@@ -88,6 +91,10 @@
                                     <action selector="cardSubmitPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="dZZ-tw-FLr"/>
                                 </connections>
                             </button>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="ic_default" translatesAutoresizingMaskIntoConstraints="NO" id="oGJ-LX-TFr" userLabel="Card Scheme Image">
+                                <rect key="frame" x="219" y="223" width="58" height="39"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
@@ -95,6 +102,7 @@
                     <connections>
                         <outlet property="cardHolderNameField" destination="PD8-i2-Br8" id="5px-W9-JBG"/>
                         <outlet property="cardNumberField" destination="0lz-11-3YY" id="rbA-t5-Thd"/>
+                        <outlet property="cardSchemeImage" destination="oGJ-LX-TFr" id="oCI-Dx-6Hp"/>
                         <outlet property="ccvField" destination="axL-kH-sPx" id="sNn-K8-b8o"/>
                         <outlet property="expirationDateField" destination="UQd-A2-VId" id="fpG-L8-jIl"/>
                         <outlet property="lblVCardH" destination="pPd-u8-ON3" id="r5Q-4I-mhe"/>
@@ -109,4 +117,7 @@
             <point key="canvasLocation" x="77.599999999999994" y="37.331334332833585"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="ic_default" width="168" height="112"/>
+    </resources>
 </document>

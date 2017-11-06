@@ -10,6 +10,7 @@ import UIKit
 @testable import PayDock
 class ViewController: UIViewController, UITextFieldDelegate {
     
+    @IBOutlet weak var cardSchemeImage: UIImageView!
     @IBOutlet weak var cardNumberField: UITextField!
     @IBOutlet weak var cardHolderNameField: UITextField!
     @IBOutlet weak var expirationDateField: UITextField!
@@ -23,6 +24,7 @@ class ViewController: UIViewController, UITextFieldDelegate {
 
     let gatewayId: String = "58d06b6a6529147222e4afa8"
     var autoInsertDateSlash = true
+    var mCardType: CardType = .Unknown
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -47,6 +49,36 @@ class ViewController: UIViewController, UITextFieldDelegate {
         // Dispose of any resources that can be recreated.
     }
     
+    @IBAction func cardNumberChanged(_ sender: UITextField) {
+        let (cardType, _, cardValid) = checkCardNumber(input: cardNumberField.text!)
+        mCardType = cardType
+        switch cardType {
+        case .Amex:
+            cardSchemeImage.image = UIImage(named: "ic_amex")
+            break
+        case .Visa:
+            cardSchemeImage.image = UIImage(named: "ic_visa")
+            break
+        case .MasterCard:
+            cardSchemeImage.image = UIImage(named: "ic_mastercard")
+            break
+        case .Diners:
+            cardSchemeImage.image = UIImage(named: "ic_diners")
+            break
+        case .UnionPay:
+            cardSchemeImage.image = UIImage(named: "ic_cup")
+            break
+        default:
+            cardSchemeImage.image = UIImage(named: "ic_default")
+            break
+        }
+        
+        if (cardValid) {
+            self.cardHolderNameField.becomeFirstResponder()
+        }
+    
+    }
+    
     @IBAction func DateChanged(_ sender: UITextField) {
         var nsText = expirationDateField.text!
         
@@ -61,9 +93,12 @@ class ViewController: UIViewController, UITextFieldDelegate {
             expirationDateField.text = nsText
         }
         
-//        if (nsText.count == 5){
-//            let (monthString, yearString, validDateNumber) = checkDate(input: nsText as String)
-//        }
+        if (nsText.count == 5){
+            let (_, _, validDateNumber) = checkDate(input: nsText as String)
+            if (validDateNumber){
+                self.ccvField.becomeFirstResponder()
+            }
+        }
         
         
         
@@ -136,6 +171,8 @@ class ViewController: UIViewController, UITextFieldDelegate {
             let newLength = startingLength + lengthToAdd - lengthToReplace
             if (newLength > 4){
                 return false
+            } else if ((mCardType != CardType.Amex) && (newLength > 3)) {
+                return false
             }
             if (lengthToAdd > 0) {
                 let cs = CharacterSet(charactersIn: allowedCardCharacters)
@@ -168,19 +205,19 @@ class ViewController: UIViewController, UITextFieldDelegate {
         if (validCardNumber == false)
         {
             valid = false
-            lblVNo.text="card no is incorrect";
+            lblVNo.text="Card number invalid";
         }
-        
         if (validDateNumber == false)
         {
             valid = false
-            lblVdate.text="expiration Date Field value is required";
+            lblVdate.text="Expiration error";
         }
         
-        if (ccvField.text == "")
+        if (((mCardType == CardType.Amex) && (ccvField.text!.count != 4)) ||
+            ((mCardType != CardType.Amex) && (ccvField.text!.count != 3)))
         {
             valid = false
-            lblVccv.text="CCV is required";
+            lblVccv.text="CCV error";
         }
         
         
@@ -222,6 +259,7 @@ class ViewController: UIViewController, UITextFieldDelegate {
             }
         }
     }
+    
     
     func clearErrors()
     {

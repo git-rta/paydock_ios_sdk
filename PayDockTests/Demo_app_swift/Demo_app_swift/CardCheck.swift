@@ -9,30 +9,23 @@
 import Foundation
 
 enum CardType: String {
-    case Unknown, Amex, Visa, MasterCard, Diners, Discover, JCB, Elo, Hipercard, UnionPay
+    case Unknown, Amex, Visa, MasterCard, Diners, UnionPay
     
-    static let allCards = [Amex, Visa, MasterCard, Diners, Discover, JCB, Elo, Hipercard, UnionPay]
+    
+    static let allCards = [Amex, Visa, MasterCard, Diners, UnionPay]
     
     var regex : String {
         switch self {
         case .Amex:
-            return "^3[47][0-9]{5,}$"
+            return "^3[47]\\d*"
         case .Visa:
-            return "^4[0-9]{6,}([0-9]{3})?$"
+            return "^4\\d*"
         case .MasterCard:
-            return "^(5[1-5][0-9]{4}|677189)[0-9]{5,}$"
+            return "^(222[1-9]|22[3-9]|2[3-6]|27[0-1]|2720|5[1-5])\\d*"
         case .Diners:
-            return "^3(?:0[0-5]|[68][0-9])[0-9]{4,}$"
-        case .Discover:
-            return "^6(?:011|5[0-9]{2})[0-9]{3,}$"
-        case .JCB:
-            return "^(?:2131|1800|35[0-9]{3})[0-9]{3,}$"
+            return "^(30[0-5]|309|36|3[8-9])\\d*"
         case .UnionPay:
-            return "^(62|88)[0-9]{5,}$"
-        case .Hipercard:
-            return "^(606282|3841)[0-9]{5,}$"
-        case .Elo:
-            return "^((((636368)|(438935)|(504175)|(451416)|(636297))[0-9]{0,10})|((5067)|(4576)|(4011))[0-9]{0,12})$"
+            return "^62\\d*"
         default:
             return ""
         }
@@ -83,7 +76,9 @@ func checkCardNumber(input: String) -> (type: CardType, formatted: String, valid
     }
 
     // check validity
-    if (numberOnly.count > 0) {
+    if (type == .Amex && numberOnly.count == 15) {
+        valid = luhnCheck(cardNumber: numberOnly)
+    } else if (numberOnly.count == 16) {
         valid = luhnCheck(cardNumber: numberOnly)
     }
     

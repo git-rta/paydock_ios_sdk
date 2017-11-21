@@ -31,7 +31,7 @@ public class CardFormViewController: UIViewController {
     
     @IBOutlet weak var lblVGError: UILabel!
     
-    let gatewayId: String = "58d06b6a6529147222e4afa8"
+    let gatewayId: String = ""
     
     
     override func viewDidLoad() {
@@ -90,7 +90,7 @@ public class CardFormViewController: UIViewController {
             let year: String? = dateArr.count > 1 ? dateArr[1] : nil
             
             PayDock.setSecretKey(key: "")
-            PayDock.setPublicKey(key: "8b2dad5fcf18f6f504685a46af0df82216781f3b")
+            PayDock.setPublicKey(key: "")
             PayDock.shared.isSandbox = true
             
             let address = Address(line1: "one", line2: "two", city: "city", postcode: "1234", state: "state", country: "AU")

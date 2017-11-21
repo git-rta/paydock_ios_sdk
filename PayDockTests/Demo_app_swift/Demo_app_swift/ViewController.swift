@@ -23,6 +23,9 @@ class ViewController: UIViewController, UITextFieldDelegate {
     
 
     let gatewayId: String = "58d06b6a6529147222e4afa8"
+    let publicKey: String = "8b2dad5fcf18f6f504685a46af0df82216781f3b"
+    
+    
     var autoInsertDateSlash = true
     var mCardType: CardType = .Unknown
     
@@ -38,12 +41,11 @@ class ViewController: UIViewController, UITextFieldDelegate {
 //        let frameworkBundle = Bundle(identifier: "com.roundtableapps.PayDock")
 //        let storyboard = UIStoryboard(name: "cardForm", bundle: frameworkBundle)
 //        let CardFormVC = storyboard.instantiateViewController(withIdentifier: "CardFormViewController") as UIViewController
-//
 //        self.present(CardFormVC, animated: true, completion: nil)
-
+    
         //Demo-app-swift
-        
     }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -189,6 +191,7 @@ class ViewController: UIViewController, UITextFieldDelegate {
 
 
     @IBAction func cardSubmitPressed(_ sender: Any) {
+
         clearErrors()        
         
         var valid = true
@@ -224,7 +227,7 @@ class ViewController: UIViewController, UITextFieldDelegate {
         if(valid){
             
             PayDock.setSecretKey(key: "")
-            PayDock.setPublicKey(key: "8b2dad5fcf18f6f504685a46af0df82216781f3b")
+            PayDock.setPublicKey(key: publicKey)
             PayDock.shared.isSandbox = true
             
             let address = Address(line1: "one", line2: "two", city: "city", postcode: "1234", state: "state", country: "AU")

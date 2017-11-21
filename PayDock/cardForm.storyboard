@@ -41,9 +41,6 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <attributedString key="attributedText"/>
                                 <textInputTraits key="textInputTraits"/>
-                                <connections>
-                                    <action selector="cardNumberField:" destination="AtH-eo-ZKD" eventType="editingDidEnd" id="EZd-Fc-7d3"/>
-                                </connections>
                             </textField>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uUT-wW-aKI" userLabel="Card Number Validation Label">
                                 <rect key="frame" x="16" y="247" width="251" height="21"/>

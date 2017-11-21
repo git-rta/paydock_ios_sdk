@@ -3,7 +3,7 @@
 //  Demo_app_swift
 //
 //  Created by Mark Cardamis on 3/11/17.
-//  Copyright © 2017 Oleksandr Omelchenko. All rights reserved.
+//  Copyright © 2017 PayDock. All rights reserved.
 //
 
 import Foundation

@@ -3,7 +3,7 @@
 //  Demo_app_swift
 //
 //  Created by Oleksandr Omelchenko on 18.10.17.
-//  Copyright © 2017 Oleksandr Omelchenko. All rights reserved.
+//  Copyright © 2017 PayDock. All rights reserved.
 //
 
 import UIKit
